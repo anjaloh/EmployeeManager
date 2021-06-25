@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { CheckIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { EmployeeApi } from '../api/employeeApi';
 
 export const EmployeeForm = () => {
   const {
@@ -28,6 +29,16 @@ export const EmployeeForm = () => {
   } = useForm();
 
   const [isDepartmentSelected, setIsDepartmentSelected] = useState(false);
+  const dateOfBirth = watch('dateOfBirth');
+
+  useEffect(() => {
+    setValue('age', dayjs(Date.now()).diff(dateOfBirth, 'years'));
+  }, [dateOfBirth, setValue]);
+
+  useEffect(() => {
+    const employeeApi = EmployeeApi.getInstance();
+    employeeApi.GetEmployees().then((data) => console.log(data));
+  }, []);
 
   function onSubmit(values: any) {
     return new Promise((resolve) => {
@@ -37,11 +48,6 @@ export const EmployeeForm = () => {
       }, 3000);
     });
   }
-
-  const dateOfBirth = watch('dateOfBirth');
-  useEffect(() => {
-    setValue('age', dayjs(Date.now()).diff(dateOfBirth, 'years'));
-  }, [dateOfBirth, setValue]);
 
   return (
     <Box w="40%" height="100%" px={3}>
