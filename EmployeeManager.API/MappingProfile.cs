@@ -15,6 +15,7 @@ namespace EmployeeManager.API
             CreateMap<Employee, EmployeeUpdateDto>();
             CreateMap<EmployeeUpdateDto, Employee>();
             CreateMap<Department, DepartmentDto>();
+            CreateMap<Department, DepartmentMinimalDto>();
             CreateMap<Department, DepartmentCreateDto>();
         }
     }
