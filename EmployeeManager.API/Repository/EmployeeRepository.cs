@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager.API.Contracts;
 using EmployeeManager.API.Entities;
@@ -19,17 +21,36 @@ namespace EmployeeManager.API.Repository
                 .ToListAsync();
         }
 
-        public async Task<Employee> GetEmployeeByIdAsync(long id)
+        public async Task<Employee> GetEmployeeByIdAsync(Guid guid)
         {
-            return await FindByCondition(employee => employee.Id == id)
+            return await FindByCondition(employee => employee.Guid == guid)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Employee> GetEmployeeWithDetailsAsync(long id)
+        public async Task<Employee> GetEmployeeWithDetailsAsync(Guid guid)
         {
-            return await FindByCondition(employee => employee.Id == id)
-                .Include(employee => employee.Department)
-                .FirstOrDefaultAsync();
+            return await FindByCondition(employee => employee.Guid == guid)
+                .Select(employee =>
+                    new Employee
+                    {
+                        Guid = employee.Guid,
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        EmailAddress = employee.EmailAddress,
+                        DateOfBirth = employee.DateOfBirth,
+                        Age = employee.Age,
+                        Salary = employee.Salary,
+                        Department = new Department
+                        {
+                            Guid = employee.Department.Guid,
+                            Name = employee.Department.Name,
+                            CreatedAt = employee.Department.CreatedAt,
+                            UpdatedAt = employee.Department.UpdatedAt
+                        },
+                        CreatedAt = employee.CreatedAt,
+                        UpdatedAt = employee.UpdatedAt
+                    }
+                ).FirstOrDefaultAsync();
         }
 
         public void CreateEmployee(Employee employee)
