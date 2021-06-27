@@ -25,7 +25,7 @@ import { EmployeeApi } from '../api/employee-api';
 import { Employee } from '../interfaces/employee';
 import { AxiosError } from 'axios';
 
-export const EmployeeForm = () => {
+export const EmployeeFormSection = () => {
   const {
     handleSubmit,
     register,
@@ -71,17 +71,17 @@ export const EmployeeForm = () => {
           description: error.message,
           status: 'error',
           position: 'top-right',
-          duration: null,
           isClosable: true,
         });
       });
   }
 
   return (
-    <Box w='40%' height='100%' px={3}>
-      <Heading mb={5} size={'xl'}>
+    <Box maxWidth='100vw' height='100%' px={3}>
+      <Heading mb={5} size={'2xl'}>
         Employee Manager
       </Heading>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl mb={2} isInvalid={errors.departmentId} isRequired>
           <FormLabel htmlFor='departmentId'>Department</FormLabel>

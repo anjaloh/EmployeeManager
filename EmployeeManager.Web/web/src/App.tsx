@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { ChakraProvider, Box, HStack, Grid, theme } from '@chakra-ui/react';
+import { ChakraProvider, Box, VStack, Grid, theme } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { EmployeeForm } from './components/EmployeeForm';
-import { EmployeeTable } from './components/EmployeeTable';
+import { EmployeeFormSection } from './components/EmployeeFormSection';
+import { EmployeeTableSection } from './components/EmployeeTableSection';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign='center' fontSize='xl'>
+    <Box fontSize='xl'>
       <Grid minH='100vh' p={3}>
         <ColorModeSwitcher justifySelf='flex-end' />
-        <HStack spacing={8}>
-          <EmployeeForm />
-          <EmployeeTable />
-        </HStack>
+        <VStack spacing={8}>
+          <EmployeeFormSection />
+          <EmployeeTableSection />
+        </VStack>
       </Grid>
     </Box>
   </ChakraProvider>
