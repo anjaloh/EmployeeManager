@@ -34,7 +34,7 @@ namespace EmployeeManager.API.Controllers
                 var employees = await _repository.Employee.GetAllEmployeesAsync();
                 _logger.LogInfo("Fetched all employees from database.");
 
-                var employeeResult = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
+                var employeeResult = _mapper.Map<IEnumerable<EmployeeWithDetailsDto>>(employees);
                 return Ok(employeeResult);
             }
             catch (Exception e)

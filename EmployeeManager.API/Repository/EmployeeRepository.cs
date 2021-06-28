@@ -18,7 +18,28 @@ namespace EmployeeManager.API.Repository
         public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
         {
             return await FindAll()
-                .ToListAsync();
+                .Select(employee =>
+                    new Employee
+                    {
+                        Guid = employee.Guid,
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        EmailAddress = employee.EmailAddress,
+                        DateOfBirth = employee.DateOfBirth,
+                        Age = employee.Age,
+                        Salary = employee.Salary,
+                        Department = new Department
+                        {
+                            Id = employee.Department.Id,
+                            Guid = employee.Department.Guid,
+                            Name = employee.Department.Name,
+                            CreatedAt = employee.Department.CreatedAt,
+                            UpdatedAt = employee.Department.UpdatedAt
+                        },
+                        CreatedAt = employee.CreatedAt,
+                        UpdatedAt = employee.UpdatedAt
+                    }
+                ).ToListAsync();
         }
 
         public async Task<Employee> GetEmployeeByIdAsync(Guid guid)
