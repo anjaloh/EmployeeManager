@@ -63,6 +63,7 @@ namespace EmployeeManager.API.Repository
                         Salary = employee.Salary,
                         Department = new Department
                         {
+                            Id = employee.Department.Id,
                             Guid = employee.Department.Guid,
                             Name = employee.Department.Name,
                             CreatedAt = employee.Department.CreatedAt,
