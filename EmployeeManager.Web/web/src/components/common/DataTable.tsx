@@ -14,8 +14,9 @@ export const DataTable = <Data extends object>({
 }: DataTableProps<Data>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ data, columns }, useSortBy);
+
   return (
-    <Table {...getTableProps()} fontSize={'md'}>
+    <Table {...getTableProps()} size={'sm'}>
       <Thead>
         {headerGroups.map(headerGroup => (
           <Tr {...headerGroup.getHeaderGroupProps()}>

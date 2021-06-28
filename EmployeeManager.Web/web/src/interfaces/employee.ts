@@ -6,7 +6,7 @@ export interface Employee {
   firstName: string;
   lastName: string;
   emailAddress: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   age: number;
   salary: number;
   department: Department;
