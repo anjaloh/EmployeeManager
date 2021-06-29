@@ -126,7 +126,7 @@ namespace EmployeeManager.API.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateOwner(Guid id, [FromBody] EmployeeUpdateDto employee)
+        public async Task<IActionResult> UpdateEmployee(Guid id, [FromBody] EmployeeUpdateDto employee)
         {
             try
             {
