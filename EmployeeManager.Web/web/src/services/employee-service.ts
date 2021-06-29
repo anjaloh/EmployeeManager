@@ -84,4 +84,27 @@ export class EmployeeService {
         });
       });
   }
+
+  public async deleteEmployee(guid: string) {
+    return this._employeeApi
+      .DeleteEmployee(guid)
+      .then(() => {
+        this._toast({
+          title: MESSAGES.EMPLOYEE.UPDATED,
+          description: `Employee record has been deleted from the database.`,
+          status: 'success',
+          position: 'top-right',
+          isClosable: true,
+        });
+      })
+      .catch((error: AxiosError) => {
+        this._toast({
+          title: 'Something went wrong while updating new Employee record',
+          description: error.message,
+          status: 'error',
+          position: 'top-right',
+          isClosable: true,
+        });
+      });
+  }
 }

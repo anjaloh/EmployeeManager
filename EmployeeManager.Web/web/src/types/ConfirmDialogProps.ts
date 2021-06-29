@@ -5,4 +5,4 @@ export type ConfirmDialogProps = {
   confirmButtonColor?: string;
   showConfirmDialog: boolean;
   setShowConfirmDialog: (v: boolean) => void;
-}
+};

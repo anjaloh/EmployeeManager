@@ -40,7 +40,11 @@ export const EmployeeIndex = () => {
         <Box pt={10}>
           <Switch>
             <Route exact path={['/', '/employees']} component={EmployeeTable} />
-            <Route exact path={['/employees/create']} component={CreateEmployee} />
+            <Route
+              exact
+              path={['/employees/create']}
+              component={CreateEmployee}
+            />
             <Route exact path={['/employees/:guid']} component={Employee} />
           </Switch>
         </Box>

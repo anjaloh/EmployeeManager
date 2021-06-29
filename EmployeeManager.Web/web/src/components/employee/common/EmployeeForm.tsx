@@ -23,12 +23,7 @@ import { PopulateDepartmentOptionsEffect } from '../../../effects/populateDepart
 import { Employee } from '../../../interfaces/employee';
 import { SetEmployeeFormDataEffect } from '../../../effects/setEmployeeFormData.effect';
 import { useHistory } from 'react-router-dom';
-
-export type EmployeeFormProps = {
-  formType: 'create' | 'update';
-  employeeDetails?: Employee | undefined;
-  isLoading?: boolean;
-};
+import { EmployeeFormProps } from '../../../types/EmployeeFormProps';
 
 export const EmployeeForm = ({
   formType,

@@ -1,4 +1,4 @@
-import { ButtonGroup, IconButton, useToast } from '@chakra-ui/react';
+import { ButtonGroup, IconButton, Spinner, useToast } from '@chakra-ui/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Employee } from '../../interfaces/employee';
 import { Column } from 'react-table';
@@ -8,8 +8,7 @@ import { FaEdit, FaTrashAlt } from 'react-icons/all';
 import { EmployeeApi } from '../../api/employee-api';
 import { DataTable } from '../common/DataTable';
 import { Link as RouterLink } from 'react-router-dom';
-import { MESSAGES } from '../../constants/messages';
-import { AxiosError } from 'axios';
+import { EmployeeService } from '../../services/employee-service';
 
 dayjs.extend(utc);
 
@@ -17,6 +16,7 @@ export const EmployeeTable = () => {
   const toast = useToast();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [needRefresh, setNeedRefresh] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const data: Employee[] = useMemo(() => employees, [employees]);
 
@@ -28,28 +28,8 @@ export const EmployeeTable = () => {
       );
 
       if (response) {
-        EmployeeApi.getInstance()
-          .DeleteEmployee(guid)
-          .then(() => {
-            toast({
-              title: MESSAGES.EMPLOYEE.DELETED,
-              description: 'Employee record deleted from the database.',
-              position: 'top-right',
-              status: 'success',
-              isClosable: true,
-            });
-
-            setNeedRefresh(true);
-          })
-          .catch((error: AxiosError) => {
-            toast({
-              title: 'Error occurred',
-              description: error.message,
-              position: 'top-right',
-              status: 'error',
-              isClosable: true,
-            });
-          });
+        const employeeService = new EmployeeService(toast);
+        employeeService.deleteEmployee(guid).then(() => setNeedRefresh(true));
       }
     },
     [toast]
@@ -132,11 +112,21 @@ export const EmployeeTable = () => {
   );
 
   useEffect(() => {
+    setIsLoading(true);
+
     EmployeeApi.getInstance()
       .GetAllEmployees()
       .then(({ data }) => setEmployees(data))
-      .finally(() => setNeedRefresh(false));
+      .finally(() => {
+        setIsLoading(false);
+        setNeedRefresh(false);
+      });
   }, [needRefresh]);
 
-  return <DataTable data={data} columns={columns} />;
+  return (
+    <>
+      {isLoading && <Spinner size={'xl'} thickness={'4px'} />}
+      {!isLoading && <DataTable data={data} columns={columns} />}
+    </>
+  );
 };
